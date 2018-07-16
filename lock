@@ -6,7 +6,9 @@ set -o errexit -o noclobber -o nounset
 HUE=(-level 0%,100%,0.6)
 EFFECT=(-filter Gaussian -resize 20% -define filter:sigma=1.5 -resize 500.5%)
 # default system sans-serif font
-FONT="$(convert -list font | awk "{ a[NR] = \$2 } /family: $(fc-match sans -f "%{family}\n")/ { print a[NR-1]; exit }")"
+# FONT="$(convert -list font | awk "{ a[NR] = \$2 } /family: $(fc-match sans -f "%{family}\n")/ { print a[NR-1]; exit }")"
+# Hard code the font to speed up lock times
+FONT="DejaVu-Sans-Bold"
 IMAGE="$(mktemp).png"
 
 OPTIONS="Options:
@@ -52,8 +54,8 @@ case "$LANG" in
 esac
 
 # scrot -z "$IMAGE"
-# gnome-screenshot -f "$IMAGE"
-import -window root "$IMAGE"
+gnome-screenshot -f "$IMAGE"
+# import -window root "$IMAGE"
 ICON="$SCRIPTPATH/lock.png"
 PARAM=(--textcolor=ffffff00 --insidecolor=ffffff1c --ringcolor=ffffff3e \
        --linecolor=ffffff00 --keyhlcolor=00000080 --ringvercolor=00000000 \
